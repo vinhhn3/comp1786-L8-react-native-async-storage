@@ -1,11 +1,39 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function App() {
+  const [nickname, setNickname] = useState("");
+
+  useEffect(() => {
+    const firstLoad = async () => {};
+    firstLoad();
+  }, []);
+
+  const saveNickname = async () => {};
+
+  const removeNickname = async () => {};
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {nickname ? (
+        <Text style={styles.heading}>Hello {nickname}</Text>
+      ) : (
+        <Text style={styles.heading}>Create your nickname</Text>
+      )}
+
+      <TextInput
+        placeholder="Enter Your Nickname"
+        style={styles.textInput}
+        value={nickname}
+        onChangeText={(value) => {
+          setNickname(value);
+        }}
+      />
+
+      <View style={styles.buttonContainer}>
+        <Button title="Save" onPress={saveNickname} />
+        <Button title="Delete" onPress={removeNickname} />
+      </View>
     </View>
   );
 }
