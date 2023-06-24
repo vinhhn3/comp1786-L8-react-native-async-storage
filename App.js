@@ -1,17 +1,49 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function App() {
   const [nickname, setNickname] = useState("");
 
   useEffect(() => {
-    const firstLoad = async () => {};
+    const firstLoad = async () => {
+      try {
+        const savedNickname = await AsyncStorage.getItem("@nickname");
+        setNickname(savedNickname);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     firstLoad();
   }, []);
 
-  const saveNickname = async () => {};
+  const saveNickname = async () => {
+    try {
+      await AsyncStorage.setItem("@nickname", nickname);
+    } catch (err) {
+      console.log(err);
+    }
 
-  const removeNickname = async () => {};
+    Keyboard.dismiss();
+  };
+
+  const removeNickname = async () => {
+    try {
+      await AsyncStorage.removeItem("@nickname");
+      setNickname();
+    } catch (err) {
+      console.log(err);
+    }
+    Keyboard.dismiss();
+  };
 
   return (
     <View style={styles.container}>
