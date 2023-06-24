@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import {
+  Alert,
   Button,
   Keyboard,
   StyleSheet,
@@ -27,6 +28,17 @@ export default function App() {
 
   const saveNickname = async () => {
     try {
+      if (!nickname) {
+        Alert.alert("ERROR", "Nickname should not be full", [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ]);
+        return;
+      }
       await AsyncStorage.setItem("@nickname", nickname);
     } catch (err) {
       console.log(err);
